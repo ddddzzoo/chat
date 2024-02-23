@@ -1,14 +1,13 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <vector>
-
 #include "thirdparty/json.hpp"
+
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
 using json = nlohmann::json;
 
-void fun1()
-{
+std::string fun1() {
   json js;
   js["msg_type"] = 2;
   js["from"] = "zhang san";
@@ -16,11 +15,11 @@ void fun1()
   js["msg"] = "yi dao sha le ni";
 
   std::string send_buf = js.dump();
-  std::cout << send_buf.c_str() << std::endl;
+  // std::cout << send_buf.c_str() << std::endl;
+  return send_buf;
 }
 
-void fun2()
-{
+void fun2() {
   json js;
   // 添加数组
   js["id"] = {1, 2, 3, 4, 5};
@@ -34,8 +33,7 @@ void fun2()
   std::cout << js << std::endl;
 }
 
-void fun3()
-{
+std::string fun3() {
   json js;
 
   std::vector<int> vec;
@@ -52,16 +50,35 @@ void fun3()
 
   js["map"] = m;
 
-  std::cout << js << std::endl;
+  // std::cout << js << std::endl;
+  std::string send_buf = js.dump();
+  return send_buf;
 }
 
-int main()
-{
-  fun1();
+int main() {
+  std::string recv_buf1 = fun1();
+  // 数据反序列化
+  json js_buf1 = json::parse(recv_buf1);
+  std::cout << js_buf1["msg_type"] << std::endl;
+  std::cout << js_buf1["from"] << std::endl;
+  std::cout << js_buf1["to"] << std::endl;
+  std::cout << js_buf1["msg"] << std::endl;
 
-  fun2();
+fun2();
 
-  fun3();
+  std::string recv_buf2 = fun3();
+
+  json js_buf2 = json::parse(recv_buf2);
+
+  std::vector<int> vec = js_buf2["list"];
+  for (auto &i : vec) {
+    std::cout << i << " ";
+  }
+
+  std::map<int, std::string> m = js_buf2["map"];
+  for (auto &i : m) {
+    std::cout << i.first  << " " << i.second << std::endl;
+  }
 
   return 0;
 }
