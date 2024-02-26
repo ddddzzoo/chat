@@ -1,4 +1,4 @@
-include(fetchcontent)
+include(FetchContent)
 
 fetchcontent_declare(muduo
   GIT_REPOSITORY https://github.com/chenshuo/muduo.git

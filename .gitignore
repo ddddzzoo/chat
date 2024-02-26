@@ -36,6 +36,7 @@
 *build*
 .vscode
 .vs
+bin
 
 # Config files
 CMakeSettings.json
