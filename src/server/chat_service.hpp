@@ -8,6 +8,7 @@
 #include <unordered_map>
 
 #include "json.hpp"
+#include "model/user_model.hpp"
 
 using namespace std;
 using namespace muduo;
@@ -37,6 +38,9 @@ class ChatService {
 
   // 储存消息id和其对应业务处理方法
   unordered_map<int, MsgHandler> _msgHandlerMap;
+
+  // 数据操作类对象
+  UserModel _userModel;
 };
 
 #endif
