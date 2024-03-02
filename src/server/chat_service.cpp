@@ -20,10 +20,42 @@ ChatService::ChatService() {
       {REG_MSG, std::bind(&ChatService::reg, this, _1, _2, _3)});
 }
 
-// 处理登录业务
+// 处理登录业务 id pwd
 void ChatService::login(const TcpConnectionPtr& conn, json& js,
                         Timestamp time) {
-  LOG_INFO << "login";
+  int id = js["id"].get<int>();
+  string pwd = js["password"];
+
+  User user = _userModel.query(id);
+  if (user.getId() == id && user.getPassword() == pwd) {
+    // 当前用户已经登录
+    if (user.getState() == "online") {
+      // 不允许用户重复登录
+      json response;
+      response["msgid"] = LOGIN_MSG_ACK;
+      response["errno"] = 2;
+      response["errmsg"] = "该账号已登录，请重新输入账号";
+      conn->send(response.dump());
+    }
+    else {
+      // 用户登录成功
+      json response;
+      response["msgid"] = LOGIN_MSG_ACK;
+      response["errno"] = 0;
+      response["id"] = user.getId();
+      response["name"] = user.getName();
+      response["errmsg"] = "登录成功";
+      conn->send(response.dump());
+    }
+  }
+  else {
+    // 登录失败:用户不存在 用户名或密码错误
+    json response;
+    response["msgid"] = LOGIN_MSG_ACK;
+    response["errno"] = 1;
+    response["errmsg"] = "用户名或密码错误";
+    conn->send(response.dump());
+  }
 }
 
 // 处理注册业务
