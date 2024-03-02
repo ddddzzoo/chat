@@ -38,7 +38,11 @@ void ChatService::login(const TcpConnectionPtr& conn, json& js,
       conn->send(response.dump());
     }
     else {
-      // 用户登录成功
+      // 用户登录成功 记录用户信息
+      {
+        lock_guard<mutex> lock(_connMutex);
+        _userConnMap.insert({id, conn});
+      }
       json response;
       response["msgid"] = LOGIN_MSG_ACK;
       response["errno"] = 0;

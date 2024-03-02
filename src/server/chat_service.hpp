@@ -4,6 +4,7 @@
 #include <muduo/net/TcpConnection.h>
 
 #include <functional>
+#include <mutex>
 #include <string>
 #include <unordered_map>
 
@@ -38,6 +39,10 @@ class ChatService {
 
   // 储存消息id和其对应业务处理方法
   unordered_map<int, MsgHandler> _msgHandlerMap;
+  // 储存在线用户的通信连接
+  unordered_map<int, TcpConnectionPtr> _userConnMap;
+  // 定义互斥锁，保证_userConnMap的线程安全
+  mutex _connMutex;
 
   // 数据操作类对象
   UserModel _userModel;
