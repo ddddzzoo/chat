@@ -9,6 +9,7 @@
 #include <unordered_map>
 
 #include "json.hpp"
+#include "model/offline_message_model.hpp"
 #include "model/user_model.hpp"
 
 using namespace std;
@@ -52,6 +53,7 @@ class ChatService {
 
   // 数据操作类对象
   UserModel _userModel;
+  OfflineMsgModel _offlineMsgModel;
 };
 
 #endif
