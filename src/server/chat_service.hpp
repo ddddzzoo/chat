@@ -37,6 +37,9 @@ class ChatService {
   // 获取消息对应处理器
   MsgHandler getHandler(int msgid);
 
+  // 一对一聊天业务
+  void oneChat(const TcpConnectionPtr& conn, json& js, Timestamp time);
+
  private:
   ChatService();
 
