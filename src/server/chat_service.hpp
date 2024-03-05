@@ -41,6 +41,9 @@ class ChatService {
   // 一对一聊天业务
   void oneChat(const TcpConnectionPtr& conn, json& js, Timestamp time);
 
+  // 服务器异常退出，重置用户state
+  void reset();
+
  private:
   ChatService();
 
