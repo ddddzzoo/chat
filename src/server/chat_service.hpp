@@ -9,6 +9,7 @@
 #include <unordered_map>
 
 #include "json.hpp"
+#include "model/friend_model.hpp"
 #include "model/offline_message_model.hpp"
 #include "model/user_model.hpp"
 
@@ -44,6 +45,9 @@ class ChatService {
   // 服务器异常退出，重置用户state
   void reset();
 
+  // 添加好友业务 msgid id friendid
+  void addFriend(const TcpConnectionPtr& conn, json& js, Timestamp time);
+
  private:
   ChatService();
 
@@ -57,6 +61,7 @@ class ChatService {
   // 数据操作类对象
   UserModel _userModel;
   OfflineMsgModel _offlineMsgModel;
+  FriendModel _friendModel;
 };
 
 #endif
