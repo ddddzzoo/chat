@@ -10,6 +10,7 @@
 
 #include "json.hpp"
 #include "model/friend_model.hpp"
+#include "model/group_model.hpp"
 #include "model/offline_message_model.hpp"
 #include "model/user_model.hpp"
 
@@ -48,6 +49,15 @@ class ChatService {
   // 添加好友业务 msgid id friendid
   void addFriend(const TcpConnectionPtr& conn, json& js, Timestamp time);
 
+  // 创建群组业务
+  void createGroup(const TcpConnectionPtr& conn, json& js, Timestamp time);
+
+  // 加入群组业务
+  void addGroup(const TcpConnectionPtr& conn, json& js, Timestamp time);
+
+  // 群组聊天业务
+  void groupChat(const TcpConnectionPtr& conn, json& js, Timestamp time);
+
  private:
   ChatService();
 
@@ -62,6 +72,7 @@ class ChatService {
   UserModel _userModel;
   OfflineMsgModel _offlineMsgModel;
   FriendModel _friendModel;
+  GroupModel _groupModel;
 };
 
 #endif
