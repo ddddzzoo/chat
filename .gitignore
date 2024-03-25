@@ -37,6 +37,8 @@
 .vscode
 .vs
 bin
+x64
 
 # Config files
 CMakeSettings.json
+cpp.hint
